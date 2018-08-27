@@ -1,0 +1,50 @@
+<html>
+  <header></header>
+  <body>
+    <div id="d-a"></div>
+    <div id="d-b"></div>
+  </body>
+</html>
+<script>
+    // reference
+    // https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247489371&idx=1&sn=ffb55b7bc79973d1e65c6113990545d6&chksm=f951a218ce262b0e7e4c7d45465246dc9a584c7b8ecb00b13ceca39bcb779f8fc8b43f12c208&scene=27#wechat_redirect
+    function person() {
+
+    }
+    person.prototype = {
+      price: 10,
+      data: {
+        age: 12
+      },
+      computed: {
+        test: function () {
+          document.querySelector('#d-a').innerHTML = this.age
+        },
+        test1: function () {
+          document.querySelector('#d-b').innerHTML = this.age * this.price
+        }
+      }
+    }
+
+    function watcher(o) {
+      let data = o.data
+      Object.keys(data).forEach((key) => {
+        let value = data[key]
+        // bind data.keys to o.keys
+        Object.defineProperty(o, key, {
+          get: function () {
+            return value
+          },
+          set: function (newValue) {
+            value = newValue
+            Object.keys(o.computed).forEach((func) => {
+              o.computed[func].bind(o)()
+            })
+          }
+        })
+      })
+    }
+    let p = new person()
+    watcher(p)
+    setInterval(()=>{p.age++}, 600)
+</script>
