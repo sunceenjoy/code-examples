@@ -23,7 +23,7 @@ socket.on('message', message => {
 socket.on('connect', () => {
 
   // Subscribe to topics (i.e. appl,fb,aig+)
-  socket.emit('subscribe', 'uco')
+  socket.emit('subscribe', 'sco')
 
 })
 
